@@ -1,0 +1,25 @@
+//This query is basically getting the data in a required format 
+
+Ashely(P)
+Christeen(P)
+Jane(A)
+Jenny(D)
+Julia(A)
+Ketty(P)
+Maria(A)
+Meera(S)
+Priya(S)
+Samantha(D)
+There are a total of 2 doctors.
+There are a total of 2 singers.
+There are a total of 3 actors.
+There are a total of 3 professors.
+
+given input table 
+
+Name and Occupation.
+
+select concat(name,'('+substring(Occupation,1,1)+')')from Occupations order by name;
+select concat('There are a total of ',count(name),' ',lower(occupation),'s','.')  from Occupations 
+group by Occupation
+order by count(name), Occupation
