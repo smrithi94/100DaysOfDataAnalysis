@@ -1,0 +1,8 @@
+//Finding manhattan distance from one row value with another row value 
+
+select Id,City,State,round(abs(LAT_N -Lead(LAT_N,1) over (order by ID)) +
+abs(LONG_W - lead(LONG_W,1) over(order by ID)),4)
+from station
+
+
+
