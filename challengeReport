@@ -1,0 +1,30 @@
+//Challenge report 
+
+select
+    co.contest_id,
+    h.hacker_id,
+    h.name,
+    
+    --c.college_id,
+    --v.challenge_id,
+    Sum(s.total_submissions),
+    sum(s.total_accepted_submissions),
+    Sum(v.total_views),
+    sum(v.total_unique_views)
+from 
+    contests h 
+    inner join
+    colleges co 
+    on co.contest_id=h.contest_id
+    inner join
+    challenges c
+    on c.college_id=co.college_id
+    inner join
+    submission_stats s
+    on c.challenge_id=s.challenge_id
+inner join
+    view_stats v 
+on v.challenge_id=s.challenge_id
+group by co.contest_id,h.hacker_id, h.name
+having Sum(s.total_submissions)>0 and sum(s.total_accepted_submissions)>0 and Sum(v.total_views)>0 and sum(v.total_unique_views)>0
+order by co.contest_id; 
