@@ -1,0 +1,18 @@
+//This function is used to create a rollup table. Generally a rollup table is different from group by on a single table. Group by gives the values to the colummn values for example.
+/* There is a column date with the count of products purchased on that date. In group by if none of the products are purchased on a date that particular date is not shown at all. 
+so if we want the output like Date ->0 for a particular date if none of the products were purchased on that day, then we need to create a rollup table.*/\
+
+
+select dates_rollup.date,COALESCE(sum(daily_orders.invoice_id),0)as orders,COALESCE(sum(daily_orders.line_item),0)as line_item
+from 
+  dsv1069.dates_rollup
+left outer join 
+  (select date(paid_at) as day,count(distinct invoice_id) as invoice_id,count(distinct line_item_id) as line_item
+    from 
+    dsv1069.orders
+    group by 
+    date(paid_at)) daily_orders
+    on daily_orders.day =dates_rollup.date
+  group by dates_rollup.date
+ 
+ 
