@@ -1,0 +1,13 @@
+//count the number of users who got the same item again in an online website. 
+
+select 
+coalesce(u.id,u.parent_user_id) as user_id ,o.item_id,count(o.item_id)
+from 
+  dsv1069.users u
+inner join 
+  dsv1069.orders o
+  on u.id=o.user_id
+  where u.parent_user_id is not null
+group by 
+  coalesce(u.id,u.parent_user_id),o.item_id
+having count(o.item_id)>1
