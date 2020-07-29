@@ -1,0 +1,21 @@
+Given a set of orders and users, find the interval between two orders in number of days 
+
+select 
+  user_id,
+  date(paid_at),
+  --user_orders,
+  next_order,
+  date(next_order)-date(paid_at) as days_diff
+  from
+  (select 
+    user_id,
+    paid_at,
+    --count(distinct(invoice_id)) as user_orders,
+    lead((paid_at)) over (partition by user_id order by paid_at) as next_order
+  from 
+    dsv1069.orders
+  group BY
+    user_id,paid_at)order_difference
+    where date(next_order)-date(paid_at) is not null 
+  
+  
