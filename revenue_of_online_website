@@ -1,0 +1,33 @@
+/* Solution for a product analysis when A/B testing is performed and the analysis is done after the test has been started. It tracks the total orders placed and also the revenue generatd
+after a new feature is introduced */
+
+select 
+  t.event_id,
+  t.event_time,
+  t.user_id,
+  count(distinct(case when o.created_at > t.event_time then o.invoice_id else NULL end )) as orders_after_assignment,
+  count(distinct(case when o.created_at > t.event_time then o.line_item_id else NULL end )) as line_items_after_assignment,
+  sum(distinct(case when o.created_at > t.event_time then o.price else 0 end )) as revenue
+FROM (
+      select 
+      event_id,
+      event_time,
+      user_id,
+      max(case when parameter_name ='test_id'
+          then cast (parameter_value as INT)
+          ELSE NULL 
+          END) as test_id ,
+      max(case when parameter_name ='test_assignment'
+          then cast (parameter_value as INT)
+          ELSE NULL 
+          END) as test_assignment
+    from dsv1069.events
+    group by event_id,
+      event_time,
+      user_id) as t
+LEFT JOIN 
+dsv1069.orders o 
+on o.user_id = t.user_id 
+group by t.event_id,
+  t.event_time,
+  t.user_id
