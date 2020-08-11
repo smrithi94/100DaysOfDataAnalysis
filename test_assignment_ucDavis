@@ -1,0 +1,24 @@
+select 
+  item_id,(case when test_a=1 then 1 else 0 end)as test_assignment,'item_test_1' as test_number,'2013-01-05 00:00:00' as test_date
+  from dsv1069.final_assignments_qa
+union all 
+select 
+   item_id,(case when test_b=1 then 1 else 0 end)as test_assignment,'item_test_2' as test_number,'2013-01-05 00:00:00' as test_date
+  from dsv1069.final_assignments_qa
+union all
+select 
+ item_id,(case when test_c=1 then 1 else 0 end)as test_assignment,'item_test_3' as test_number,'2013-01-05 00:00:00' as test_date
+  from dsv1069.final_assignments_qa
+union all
+select 
+ item_id,(case when test_d=1 then 1 else 0 end)as test_assignment,'item_test_4' as test_number,'2013-01-05 00:00:00' as test_date
+  from dsv1069.final_assignments_qa
+union all
+select 
+ item_id,(case when test_e=1 then 1 else 0 end)as test_assignment,'item_test_5' as test_number,'2013-01-05 00:00:00' as test_date
+  from dsv1069.final_assignments_qa
+union all
+select 
+ item_id,(case when test_f=1 then 1 else 0 end)as test_assignment,'item_test_6' as test_number,'2013-01-05 00:00:00' as test_date
+  from dsv1069.final_assignments_qa
+  
